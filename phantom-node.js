@@ -6,7 +6,7 @@ var child=require('child_process');
 
 function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
-    return callback;
+	return callback;
 }
 
 module.exports={
