@@ -1,7 +1,7 @@
 Node-phantom
 ---------------
 
-This is bridge between [PhantomJs](http://phantomjs.org/) and [Node.js](http://nodejs.org/).
+This is a bridge between [PhantomJs](http://phantomjs.org/) and [Node.js](http://nodejs.org/).
 
 It is very much similar to the other bridge available, [PhantomJS-Node](https://github.com/sgentle/phantomjs-node), but is different in a few ways:
 
@@ -17,6 +17,11 @@ You will need to install PhantomJS first. The bridge assumes that the "phantomjs
 The only other dependency for using it is [socket.io](http://socket.io/).
 
 For running the tests you will need [Expresso](http://visionmedia.github.com/expresso/).
+
+
+Installing
+----------
+For now you will need to manually install socket.io and node-phantom. Npm package to be arriving shortly.
 
 
 Usage
