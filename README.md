@@ -60,3 +60,8 @@ phantom.create(function(err,ph) {
 ```
 
 You can also have a look at the test folder to see some examples of using the API.
+
+Other
+-----
+Made by Alex Scheel Meyer. Released to the public domain.
+

@@ -1,3 +1,5 @@
+//Released to the pubic domain.
+
 var http=require('http');
 var socketio=require('socket.io');
 var child=require('child_process');
@@ -15,7 +17,6 @@ module.exports={
 				return console.log('phantom stdout: '+data);
 			});
 			phantom.stderr.on('data',function(data){
-				if (data.toString('utf8').match(/No such method.*socketSentData/)) return;
 				return console.warn('phantom stderr: '+data);
 			});
 			return phantom;

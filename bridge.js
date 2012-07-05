@@ -1,3 +1,5 @@
+//Released to the pubic domain.
+
 var port=phantom.args[0];
 var webpage=require('webpage');
 var controlpage=webpage.create();
