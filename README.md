@@ -1,0 +1,62 @@
+Node-phantom
+---------------
+
+This is bridge between [PhantomJs](http://phantomjs.org/) and [Node.js](http://nodejs.org/).
+
+It is very much similar to the other bridge available, [PhantomJS-Node](https://github.com/sgentle/phantomjs-node), but is different in a few ways:
+
+  - Way fewer dependencies.
+  - API has the idiomatic error indicator as first parameter to callbacks.
+  - Uses plain Javascript instead of Coffeescript.
+
+
+Requirements
+------------
+You will need to install PhantomJS first. The bridge assumes that the "phantomjs" binary is available in the PATH.
+
+The only other dependency for using it is [socket.io](http://socket.io/).
+
+For running the tests you will need [Expresso](http://visionmedia.github.com/expresso/).
+
+
+Usage
+-----
+You can use it pretty much like you would use PhantomJS-Node, for example this is an adaptation of a [web scraping example](http://net.tutsplus.com/tutorials/javascript-ajax/web-scraping-with-node-js/) :
+
+```javascript
+var phantom=require('phantom-node');
+phantom.create(function(err,ph) {
+  return ph.createPage(function(err,page) {
+    return page.open("http://tilomitra.com/repository/screenscrape/ajax.html", function(err,status) {
+      console.log("opened site? ", status);
+      page.injectJs('http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', function(err) {
+        //jQuery Loaded.
+        //Wait for a bit for AJAX content to load on the page. Here, we are waiting 5 seconds.
+        setTimeout(function() {
+          return page.evaluate(function() {
+            //Get what you want from the page using jQuery. A good way is to populate an object with all the jQuery commands that you need and then return the object.
+            var h2Arr = [],
+            pArr = [];
+            $('h2').each(function() {
+              h2Arr.push($(this).html());
+            });
+            $('p').each(function() {
+              pArr.push($(this).html());
+            });
+
+            return {
+              h2: h2Arr,
+              p: pArr
+            };
+          }, function(err,result) {
+            console.log(result);
+            ph.exit();
+          });
+        }, 5000);
+      });
+	});
+  });
+});
+```
+
+You can also have a look at the test folder to see some examples of using the API.
