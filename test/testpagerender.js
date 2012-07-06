@@ -1,5 +1,5 @@
 var http=require('http');
-var phantom=require('../phantom-node');
+var phantom=require('../node-phantom');
 var fs=require('fs');
 var crypto = require('crypto');
 

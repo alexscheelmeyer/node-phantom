@@ -1,5 +1,5 @@
 var http=require('http');
-var phantom=require('../phantom-node');
+var phantom=require('../node-phantom');
 
 var gotFile=false;
 var server=http.createServer(function(request,response){
