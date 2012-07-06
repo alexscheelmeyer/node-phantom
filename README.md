@@ -5,7 +5,7 @@ This is a bridge between [PhantomJs](http://phantomjs.org/) and [Node.js](http:/
 
 It is very much similar to the other bridge available, [PhantomJS-Node](https://github.com/sgentle/phantomjs-node), but is different in a few ways:
 
-  - Way fewer dependencies.
+  - Way fewer dependencies/layers.
   - API has the idiomatic error indicator as first parameter to callbacks.
   - Uses plain Javascript instead of Coffeescript.
 
