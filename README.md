@@ -21,7 +21,8 @@ For running the tests you will need [Expresso](http://visionmedia.github.com/exp
 
 Installing
 ----------
-For now you will need to manually install socket.io and node-phantom. Npm package to be arriving shortly.
+
+    npm install node-phantom
 
 
 Usage
@@ -29,7 +30,7 @@ Usage
 You can use it pretty much like you would use PhantomJS-Node, for example this is an adaptation of a [web scraping example](http://net.tutsplus.com/tutorials/javascript-ajax/web-scraping-with-node-js/) :
 
 ```javascript
-var phantom=require('phantom-node');
+var phantom=require('node-phantom');
 phantom.create(function(err,ph) {
   return ph.createPage(function(err,page) {
     return page.open("http://tilomitra.com/repository/screenscrape/ajax.html", function(err,status) {
