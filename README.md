@@ -35,7 +35,7 @@ phantom.create(function(err,ph) {
   return ph.createPage(function(err,page) {
     return page.open("http://tilomitra.com/repository/screenscrape/ajax.html", function(err,status) {
       console.log("opened site? ", status);
-      page.injectJs('http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', function(err) {
+      page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', function(err) {
         //jQuery Loaded.
         //Wait for a bit for AJAX content to load on the page. Here, we are waiting 5 seconds.
         setTimeout(function() {
