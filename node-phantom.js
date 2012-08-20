@@ -1,4 +1,4 @@
-//Released to the pubic domain.
+//Released to the public domain.
 
 var http=require('http');
 var socketio=require('socket.io');

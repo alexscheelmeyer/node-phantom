@@ -1,4 +1,4 @@
-//Released to the pubic domain.
+//Released to the public domain.
 
 var port=phantom.args[0];
 var webpage=require('webpage');
