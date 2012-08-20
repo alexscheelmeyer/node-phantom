@@ -82,7 +82,14 @@ module.exports={
 						},
 						evaluate:function(evaluator,callback){
 							request(socket,[id,'pageEvaluate',evaluator.toString()],callbackOrDummy(callback));
+						},
+						set:function(name,value,callback){
+							request(socket,[id,'pageSet',name,value],callbackOrDummy(callback));
+						},
+						get:function(name,callback){
+							request(socket,[id,'pageGet',name],callbackOrDummy(callback));
 						}
+						
 					};
 					cmds[cmdId].cb(null,pageProxy);
 					delete cmds[cmdId];
@@ -104,10 +111,12 @@ module.exports={
 						delete cmds[cmdId];
 					}
 					break;
+				case 'pageGetDone':
 				case 'pageEvaluated':
 					cmds[cmdId].cb(null,JSON.parse(response[3]));
 					delete cmds[cmdId];
 					break;
+				case 'pageSetDone':
 				case 'pageReleased':
 				case 'pageJsIncluded':
 				case 'pageRendered':

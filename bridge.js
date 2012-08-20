@@ -76,8 +76,17 @@ controlpage.onAlert=function(msg){
 			break;
 		case 'pageRender':
 			page.render(request[3]);
-			respond([id,cmdId,'pageRendered',JSON.stringify(result)]);
+			respond([id,cmdId,'pageRendered']);
 			break;
+		case 'pageSet':
+			page[request[3]]=request[4];
+			respond([id,cmdId,'pageSetDone']);
+			break;
+		case 'pageGet':
+			var result=page[request[3]];
+			respond([id,cmdId,'pageGetDone',JSON.stringify(result)]);
+			break;
+
 		default:
 			console.error('unrecognized request:'+request);
 			break;
