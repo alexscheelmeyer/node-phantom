@@ -8,6 +8,9 @@ function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
 	return callback;
 }
+function unwrapArray(arr) {
+	return arr && arr.length == 1 ? arr[0] : arr
+}
 
 module.exports={
 	create:function(callback){
@@ -37,7 +40,7 @@ module.exports={
 		
 		var port=server.address().port;
 		var phantom=spawnPhantom(port);
-		
+		var pages={};
 		var cmds={};
 		var cmdid=0;
 		function request(socket,args,callback){
@@ -91,6 +94,7 @@ module.exports={
 						}
 						
 					};
+					pages[id] = pageProxy;
 					cmds[cmdId].cb(null,pageProxy);
 					delete cmds[cmdId];
 					break;
@@ -116,8 +120,9 @@ module.exports={
 					cmds[cmdId].cb(null,JSON.parse(response[3]));
 					delete cmds[cmdId];
 					break;
-				case 'pageSetDone':
 				case 'pageReleased':
+					delete pages[id]; // fallthru
+				case 'pageSetDone':
 				case 'pageJsIncluded':
 				case 'pageRendered':
 				case 'pageEventSent':
@@ -130,7 +135,12 @@ module.exports={
 					break;
 				}				
 			});		
-
+			socket.on('push', function(request) {
+				var id = request[0];
+				var cmd = request[1];
+				var callback = callbackOrDummy(pages[id] ? pages[id][cmd] : undefined);
+				callback(unwrapArray(request[2]));
+			});
 			var proxy={
 				createPage:function(callback){					
 					request(socket,[0,'createPage'],callbackOrDummy(callback));
