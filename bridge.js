@@ -13,6 +13,18 @@ function respond(response){
 var pages={};
 var pageId=1;
 
+function setupPushNotifications(id, page) {
+	var callbacks = [
+    'onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
+    'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged'
+  ];
+	callbacks.forEach(function(cb) {
+		page[cb] = function() { push([id, cb, Array.prototype.slice.call(arguments)]); }
+	})
+	function push(notification) {
+		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
+	}
+}
 
 controlpage.onAlert=function(msg){
 	var request=JSON.parse(msg);
@@ -24,6 +36,7 @@ controlpage.onAlert=function(msg){
 			var id=pageId++;
 			var page=webpage.create();
 			pages[id]=page;
+			setupPushNotifications(id, page);
 			respond([id,cmdId,'pageCreated']);
 			break;
 		case 'injectJs':
