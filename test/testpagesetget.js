@@ -12,7 +12,7 @@ exports.testPhantomPageSetGet=function(beforeExit,assert){
 					page.get('viewportSize',function(err,newValue){
 						assert.ifError(err);
 						assert.notEqual(oldValue,newValue);
-						var rnd=Math.random();
+						var rnd=Math.floor(100000*Math.random());
 						page.set('zoomFactor',rnd,function(err){
 							assert.ifError(err);
 							page.get('zoomFactor',function(err,zoomValue){

@@ -20,7 +20,7 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 				},errOr(function() {
 					//console.log(events);
 					assert.eql(events.onLoadStarted.length, 1);
-					assert.eql(events.onUrlChanged, [ url ]);
+					assert.eql(events.onUrlChanged,[url]);
 					assert.eql(events.onResourceRequested.length, 1);
 					assert.eql(events.onResourceReceived.length, 2);
 					assert.eql(events.onResourceReceived[0].stage, 'start');
