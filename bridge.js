@@ -59,8 +59,11 @@ controlpage.onAlert=function(msg){
 		var page=pages[id];
 		switch(request[2]){
 		case 'pageOpen':
-			page.open(request[3],function(status){
-				respond([id,cmdId,'pageOpened',status]);
+			page.open(request[3]);
+			break;
+		case 'pageOpenWithCallback':
+			page.open(request[3], function(status){
+				respond([id, cmdId, 'pageOpened', status]);
 			});
 			break;
 		case 'pageRelease':
@@ -84,7 +87,7 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageFileUploaded']);
 			break;
 		case 'pageEvaluate':
-			var result=page.evaluate(request[3]);
+			var result=page.evaluate.apply(page, request.slice(3));
 			respond([id,cmdId,'pageEvaluated',JSON.stringify(result)]);
 			break;
 		case 'pageRender':

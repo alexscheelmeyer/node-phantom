@@ -37,7 +37,7 @@ module.exports={
 				};\n\
 			</script></head><body></body></html>');
 		}).listen();
-		
+
 		var port=server.address().port;
 		var phantom=spawnPhantom(port);
 		var pages={};
@@ -62,8 +62,12 @@ module.exports={
 				switch(response[2]){
 				case 'pageCreated':
 					var pageProxy={
-						open:function(url,callback){
-							request(socket,[id,'pageOpen',url],callbackOrDummy(callback));
+						open:function(url, callback){
+							if(callback === undefined){
+								request(socket, [id, 'pageOpen', url]);
+							}else{
+								request(socket, [id, 'pageOpenWithCallback', url], callback);
+							}
 						},
 						release:function(callback){
 							request(socket,[id,'pageRelease'],callbackOrDummy(callback));
@@ -83,8 +87,15 @@ module.exports={
 						uploadFile:function(selector,filename,callback){
 							request(socket,[id,'pageUploadFile',selector,filename],callbackOrDummy(callback));
 						},
-						evaluate:function(evaluator,callback){
-							request(socket,[id,'pageEvaluate',evaluator.toString()],callbackOrDummy(callback));
+						evaluate:function(evaluator){
+							var callback,
+								args = Array.prototype.slice.call(arguments, 1);
+
+							if(args.length > 0 && typeof args[args.length - 1] === 'function'){
+								callback = args.pop();
+							}
+							args = [id, 'pageEvaluate', evaluator.toString()].concat(args);
+							request(socket, args, callbackOrDummy(callback))
 						},
 						set:function(name,value,callback){
 							request(socket,[id,'pageSet',name,value],callbackOrDummy(callback));
@@ -111,7 +122,9 @@ module.exports={
 					break;
 				case 'pageOpened':
 					if(cmds[cmdId]!==undefined){	//if page is redirected, the pageopen event is called again - we do not want that currently.
-						cmds[cmdId].cb(null,response[3]);
+						if(cmds[cmdId].cb !== undefined){
+							cmds[cmdId].cb(null, response[3]);
+						}
 						delete cmds[cmdId];
 					}
 					break;
