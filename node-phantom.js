@@ -87,8 +87,15 @@ module.exports={
 						uploadFile:function(selector,filename,callback){
 							request(socket,[id,'pageUploadFile',selector,filename],callbackOrDummy(callback));
 						},
-						evaluate:function(evaluator,callback){
-							request(socket,[id,'pageEvaluate',evaluator.toString()],callbackOrDummy(callback));
+						evaluate:function(evaluator){
+							var callback,
+								args = Array.prototype.slice.call(arguments, 1);
+
+							if(args.length > 0 && typeof args[args.length - 1] === 'function'){
+								callback = args.pop();
+							}
+							args = [id, 'pageEvaluate', evaluator.toString()].concat(args);
+							request(socket, args, callbackOrDummy(callback))
 						},
 						set:function(name,value,callback){
 							request(socket,[id,'pageSet',name,value],callbackOrDummy(callback));
