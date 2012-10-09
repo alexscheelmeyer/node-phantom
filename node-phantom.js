@@ -37,7 +37,7 @@ module.exports={
 				};\n\
 			</script></head><body></body></html>');
 		}).listen();
-		
+
 		var port=server.address().port;
 		var phantom=spawnPhantom(port);
 		var pages={};
@@ -62,8 +62,12 @@ module.exports={
 				switch(response[2]){
 				case 'pageCreated':
 					var pageProxy={
-						open:function(url,callback){
-							request(socket,[id,'pageOpen',url],callbackOrDummy(callback));
+						open:function(url, callback){
+							if(callback === undefined){
+								request(socket, [id, 'pageOpen', url]);
+							}else{
+								request(socket, [id, 'pageOpenWithCallback', url], callback);
+							}
 						},
 						release:function(callback){
 							request(socket,[id,'pageRelease'],callbackOrDummy(callback));
@@ -111,7 +115,9 @@ module.exports={
 					break;
 				case 'pageOpened':
 					if(cmds[cmdId]!==undefined){	//if page is redirected, the pageopen event is called again - we do not want that currently.
-						cmds[cmdId].cb(null,response[3]);
+						if(cmds[cmdId].cb !== undefined){
+							cmds[cmdId].cb(null, response[3]);
+						}
 						delete cmds[cmdId];
 					}
 					break;

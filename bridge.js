@@ -59,8 +59,11 @@ controlpage.onAlert=function(msg){
 		var page=pages[id];
 		switch(request[2]){
 		case 'pageOpen':
-			page.open(request[3],function(status){
-				respond([id,cmdId,'pageOpened',status]);
+			page.open(request[3]);
+			break;
+		case 'pageOpenWithCallback':
+			page.open(request[3], function(status){
+				respond([id, cmdId, 'pageOpened', status]);
 			});
 			break;
 		case 'pageRelease':
