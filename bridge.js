@@ -85,7 +85,7 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageFileUploaded']);
 			break;
 		case 'pageEvaluate':
-			var result=page.evaluate(request[3]);
+			var result=page.evaluate.apply(page, request.slice(3));
 			respond([id,cmdId,'pageEvaluated',JSON.stringify(result)]);
 			break;
 		case 'pageRender':
