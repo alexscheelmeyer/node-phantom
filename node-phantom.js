@@ -63,6 +63,7 @@ module.exports={
 				case 'pageCreated':
 					var pageProxy={
 						open:function(url,callback){
+							if(callback===undefined)callback=pages[id]['onLoadFinished'];
 							request(socket,[id,'pageOpen',url],callbackOrDummy(callback));
 						},
 						release:function(callback){
