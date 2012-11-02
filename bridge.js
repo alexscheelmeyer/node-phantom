@@ -61,6 +61,8 @@ controlpage.onAlert=function(msg){
 		case 'pageOpen':
 			page.open(request[3],function(status){
 				respond([id,cmdId,'pageOpened',status]);
+				// Restore the onLoadFinished handler, was overwritten by page.open
+				setupPushNotifications(id, page);
 			});
 			break;
 		case 'pageRelease':
