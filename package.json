@@ -2,7 +2,7 @@
   "author": "Alex Scheel Meyer (http://www.linkedin.com/in/alexscheelmeyer)",
   "name": "node-phantom",
   "description": "bridge between node.js and PhantomJS",
-  "version": "0.1.2",
+  "version": "0.1.2-snapshot",
   "homepage": "https://github.com/alexscheelmeyer/node-phantom",
   "repository": {
     "type": "git",

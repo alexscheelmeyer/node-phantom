@@ -91,8 +91,10 @@ module.exports={
 						},
 						get:function(name,callback){
 							request(socket,[id,'pageGet',name],callbackOrDummy(callback));
+						},
+						setFn: function(pageCallbackName, fn, callback) {
+							request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
 						}
-						
 					};
 					pages[id] = pageProxy;
 					cmds[cmdId].cb(null,pageProxy);
