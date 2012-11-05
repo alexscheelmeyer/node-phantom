@@ -99,7 +99,9 @@ controlpage.onAlert=function(msg){
 			var result=page[request[3]];
 			respond([id,cmdId,'pageGetDone',JSON.stringify(result)]);
 			break;
-
+		case 'pageSetFn':
+			page[request[3]] = eval('(' + request[4] + ')')
+			break;
 		default:
 			console.error('unrecognized request:'+request);
 			break;
