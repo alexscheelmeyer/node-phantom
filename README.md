@@ -65,6 +65,27 @@ phantom.create(function(err,ph) {
 });
 ```
 
+### phantom.create(options, callback)
+
+`options` is an optional object passed to create which will start PhantomJS
+with the specified command line arguments. For example
+
+```javascript
+phantom.create({ 'ignore-ssl-errors': 'yes' }, callback)
+```
+
+will start phantom as:
+
+```bash
+phantomjs --ignore-ssl-errors=yes
+```
+
+You may also omit the options object entirely:
+
+```javascript
+phantom.create(function() { ... })
+```
+
 You can also have a look at the test folder to see some examples of using the API.
 
 Other
