@@ -13,9 +13,20 @@ function unwrapArray(arr) {
 }
 
 module.exports={
-	create:function(callback){
+	create:function(options, callback){
+        if(typeof options === 'function' && !callback) {
+            callback = options;
+            options = {};
+        }
+
 		function spawnPhantom(port){
-			var phantom=child.spawn('phantomjs',[__dirname + '/bridge.js',port]);
+			var args = [];
+			for (var option in options) {
+				args.push('--' + option + '=' + options[option]);
+			}
+			args = args.concat([__dirname + '/bridge.js', port]);
+
+			var phantom=child.spawn('phantomjs',args);
 			phantom.stdout.on('data',function(data){
 				return console.log('phantom stdout: '+data);
 			});
@@ -91,8 +102,10 @@ module.exports={
 						},
 						get:function(name,callback){
 							request(socket,[id,'pageGet',name],callbackOrDummy(callback));
+						},
+						setFn: function(pageCallbackName, fn, callback) {
+							request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
 						}
-						
 					};
 					pages[id] = pageProxy;
 					cmds[cmdId].cb(null,pageProxy);
