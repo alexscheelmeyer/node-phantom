@@ -30,6 +30,7 @@ function setupPushNotifications(id, page) {
 controlpage.onAlert=function(msg){
 	var request=JSON.parse(msg);
 	var cmdId=request[1];
+    var result;
 //	console.log(request);
 	if(request[0]===0){
 		switch(request[2]){
@@ -69,7 +70,7 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageReleased']);
 			break;
 		case 'pageInjectJs':
-			var result=page.injectJs(request[3]);
+			result=page.injectJs(request[3]);
 			respond([id,cmdId,'pageJsInjected',JSON.stringify(result)]);
 			break;
 		case 'pageIncludeJs':
@@ -85,7 +86,7 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageFileUploaded']);
 			break;
 		case 'pageEvaluate':
-			var result=page.evaluate.apply(page, request.slice(3));
+			result=page.evaluate.apply(page, request.slice(3));
 			respond([id,cmdId,'pageEvaluated',JSON.stringify(result)]);
 			break;
 		case 'pageRender':
@@ -97,7 +98,15 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageSetDone']);
 			break;
 		case 'pageGet':
-			var result=page[request[3]];
+			result=page[request[3]];
+			respond([id,cmdId,'pageGetDone',JSON.stringify(result)]);
+			break;
+		case 'pageSettingsSet':
+			page.settings[request[3]]=request[4];
+			respond([id,cmdId,'pageSetDone']);
+			break;
+		case 'pageSettingsGet':
+			result=page.settings[request[3]];
 			respond([id,cmdId,'pageGetDone',JSON.stringify(result)]);
 			break;
 		case 'pageSetFn':
