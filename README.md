@@ -67,6 +67,18 @@ phantom.create(function(err,ph) {
 
 You can also have a look at the test folder to see some examples of using the API.
 
+## V0.2.0
+
+You can pass a second variable to `create` to define a custom path to a phantomjs executable. Useful when used in conjunction with the [phantomjs package](https://npmjs.org/package/phantomjs), especially when deploying in a CI build environment.
+
+```coffee-script
+phantom = require 'node-phantom'
+phantom.create (err, ph)->
+  # do something with ph
+, 'some/path/to/phantom/executable'
+...
+```
+
 Other
 -----
 Made by Alex Scheel Meyer. Released to the public domain.
