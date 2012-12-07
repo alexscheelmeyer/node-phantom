@@ -12,7 +12,7 @@
   "scripts": {
     "test": "expresso"
   },
-  "dependencies": {"socket.io": ">=0.9.6", "phantomjs": "*"},
+  "dependencies": {"socket.io": ">=0.9.6"},
   "devDependencies": {"socket.io": ">=0.9.2"},
   "optionalDependencies": {},
   "engines": {
