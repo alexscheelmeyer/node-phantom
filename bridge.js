@@ -16,8 +16,7 @@ var pageId=1;
 function setupPushNotifications(id, page) {
 	var callbacks = [
     'onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
-    'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
-    'onCallback'
+    'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged'
   ];
 	callbacks.forEach(function(cb) {
 		page[cb] = function() { push([id, cb, Array.prototype.slice.call(arguments)]); }
