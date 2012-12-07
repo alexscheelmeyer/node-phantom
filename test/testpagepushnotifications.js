@@ -47,7 +47,7 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 		var callbacks = [
       'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized','onLoadFinished',
       'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged',
-	  'onCallback'
+      'onCallback'
     ];
 		callbacks.forEach(function(cb) {
 			page[cb] = function(evt) {
