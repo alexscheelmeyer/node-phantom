@@ -3,7 +3,7 @@ var phantom = require('../node-phantom');
 
 var server=http.createServer(function(request,response){
 	response.writeHead(200,{"Content-Type": "text/html"});
-	response.end('<html><head><script>conXsole.log("cause-an-error")</script></head><body><h1>Hello World</h1></body></html>');
+	response.end('<html><head><script>window.callPhantom(1337); conXsole.log("cause-an-error");</script></head><body><h1>Hello World</h1></body></html>');
 }).listen();
 
 exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
@@ -21,6 +21,7 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 					//console.log(events);
 					assert.eql(events.onLoadStarted.length, 1);
 					assert.eql(events.onUrlChanged,[url]);
+					assert.eql(events.onCallback,[1337]);
 					assert.eql(events.onResourceRequested.length, 1);
 					assert.eql(events.onResourceReceived.length, 2);
 					assert.eql(events.onResourceReceived[0].stage, 'start');
@@ -45,7 +46,8 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 		var events = {};
 		var callbacks = [
       'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized','onLoadFinished',
-      'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged'
+      'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged',
+	  'onCallback'
     ];
 		callbacks.forEach(function(cb) {
 			page[cb] = function(evt) {
