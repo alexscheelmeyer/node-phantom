@@ -150,6 +150,7 @@ module.exports={
 				},
 				exit:function(callback){
 					request(socket,[0,'exit'],callbackOrDummy(callback));
+					phantom.kill('SIGTERM');
 				}
 			};
 			
