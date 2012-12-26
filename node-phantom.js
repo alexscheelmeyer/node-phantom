@@ -71,6 +71,9 @@ module.exports={
 						render:function(filename,callback){
 							request(socket,[id,'pageRender',filename],callbackOrDummy(callback));
 						},
+						renderBase64:function(extension,callback){
+							request(socket,[id,'pageRenderBase64',extension],callbackOrDummy(callback));
+						},
 						injectJs:function(url,callback){
 							request(socket,[id,'pageInjectJs',url],callbackOrDummy(callback));
 						},
@@ -114,6 +117,10 @@ module.exports={
 						cmds[cmdId].cb(null,response[3]);
 						delete cmds[cmdId];
 					}
+					break;
+				case 'pageRenderBase64Done':
+					cmds[cmdId].cb(null,response[3]);
+					delete cmds[cmdId];
 					break;
 				case 'pageGetDone':
 				case 'pageEvaluated':
