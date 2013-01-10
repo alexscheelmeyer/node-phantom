@@ -35,8 +35,22 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 					assert.match(err[0], /variable: conXsole/);
 					assert.equal(err[1][0].line, 1);
 
-					server.close();
-					ph.exit();
+					events.onConsoleMessage = [];
+					page.evaluate(function(a,b){
+						console.log(a);
+						console.log(b);
+					}, 'A', 'B', errOr(function(){
+						assert.eql(events.onConsoleMessage, ['A', 'B']);
+
+						ph.createPage(errOr(function(page){
+							page.onLoadFinished = function(){
+								onLoadFinishedFired = true;
+								server.close();
+								ph.exit();
+							};
+							page.open(url);
+						}));
+					}));
 				}));
 			}));
 		}));
