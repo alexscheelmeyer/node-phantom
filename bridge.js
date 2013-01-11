@@ -92,6 +92,10 @@ controlpage.onAlert=function(msg){
 			page.render(request[3]);
 			respond([id,cmdId,'pageRendered']);
 			break;
+		case 'pageRenderBase64':
+			var result=page.renderBase64(request[3]);
+			respond([id,cmdId,'pageRenderBase64Done', result]);
+			break;
 		case 'pageSet':
 			page[request[3]]=request[4];
 			respond([id,cmdId,'pageSetDone']);
