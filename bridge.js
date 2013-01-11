@@ -14,17 +14,20 @@ var pages={};
 var pageId=1;
 
 function setupPushNotifications(id, page) {
-	var callbacks = [
-    'onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
-    'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
-    'onCallback'
-  ];
-	callbacks.forEach(function(cb) {
-		page[cb] = function() { push([id, cb, Array.prototype.slice.call(arguments)]); }
-	})
+	var callbacks=['onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
+				   'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
+				   'onCallback'];
 	function push(notification) {
 		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
 	}
+	callbacks.forEach(function(cb) {
+		page[cb]=function(){
+			var notification=Array.prototype.slice.call(arguments);
+			var str=JSON.stringify(notification);
+			if(str.length>436)return;
+			push([id, cb, notification]);
+		};
+	})
 }
 
 controlpage.onAlert=function(msg){
