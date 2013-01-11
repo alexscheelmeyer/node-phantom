@@ -65,13 +65,14 @@ phantom.create(function(err,ph) {
 });
 ```
 
-### phantom.create(options, callback)
+### phantom.create(callback,options)
 
-`options` is an optional object passed to create which will start PhantomJS
-with the specified command line arguments. For example
+`options` is an optional object with options for how to start PhantomJS.
+`options.parameters` is an array of parameters that will be passed to PhantomJS on the commandline.
+For example
 
 ```javascript
-phantom.create({ 'ignore-ssl-errors': 'yes' }, callback)
+phantom.create(callback,{parameters:{'ignore-ssl-errors':'yes'}})
 ```
 
 will start phantom as:
@@ -80,10 +81,11 @@ will start phantom as:
 phantomjs --ignore-ssl-errors=yes
 ```
 
-You may also omit the options object entirely:
+You may also pass in a custom path if you need to select a specific instance of PhantomJS or it is not present in PATH environment.
+This can for example be used together with the [PhantomJS package] like so:
 
 ```javascript
-phantom.create(function() { ... })
+phantom.create(callback,{phantomPath:require('phantomjs').path})
 ```
 
 You can also have a look at the test folder to see some examples of using the API.
