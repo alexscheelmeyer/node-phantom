@@ -108,7 +108,7 @@ module.exports={
 								request(socket,[id,'pageUploadFile',selector,filename],callbackOrDummy(callback));
 							},
 							evaluate:function(evaluator,callback){
-								request(socket,[id,'pageEvaluate',evaluator.toString()],callbackOrDummy(callback));
+								request(socket,[id,'pageEvaluate',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 							},
 							set:function(name,value,callback){
 								request(socket,[id,'pageSet',name,value],callbackOrDummy(callback));
