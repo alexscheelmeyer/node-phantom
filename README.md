@@ -82,7 +82,7 @@ phantomjs --ignore-ssl-errors=yes
 ```
 
 You may also pass in a custom path if you need to select a specific instance of PhantomJS or it is not present in PATH environment.
-This can for example be used together with the [PhantomJS package] like so:
+This can for example be used together with the [PhantomJS package](https://npmjs.org/package/phantomjs) like so:
 
 ```javascript
 phantom.create(callback,{phantomPath:require('phantomjs').path})
