@@ -8,6 +8,7 @@ var server=http.createServer(function(request,response){
 
 exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 	var url = 'http://localhost:'+server.address().port+'/';
+	var onLoadFinishedFired = false;
 	phantom.create(errOr(function(ph){
 		ph.createPage(errOr(function(page){
 			var events = registerCallbacks(page);
@@ -35,17 +36,35 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 					assert.match(err[0], /variable: conXsole/);
 					assert.equal(err[1][0].line, 1);
 
-					server.close();
-					ph.exit();
+					events.onConsoleMessage = [];
+					page.evaluate(function(a,b){
+						console.log(a);
+						console.log(b);
+					}, errOr(function(){
+						assert.eql(events.onConsoleMessage, ['A', 'B']);
+
+						ph.createPage(errOr(function(page){
+							page.onLoadFinished = function(){
+								onLoadFinishedFired = true;
+								server.close();
+								ph.exit();
+							};
+							page.open(url);
+						}));
+					}), 'A', 'B');
 				}));
 			}));
 		}));
 	}));
 
+	beforeExit(function(){
+		assert.eql(onLoadFinishedFired, true);
+	});
+
 	function registerCallbacks(page) {
 		var events = {};
 		var callbacks = [
-      'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized','onLoadFinished',
+      'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized',/*'onLoadFinished',*/
       'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged',
       'onCallback'
     ];
