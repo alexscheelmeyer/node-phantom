@@ -131,6 +131,7 @@ module.exports={
 					case 'phantomExited':
 						request(socket,[0,'exitAck']);
 						server.close();
+						io.set('client store expiration', 0);
 						cmds[cmdId].cb();
 						delete cmds[cmdId];
 						break;
