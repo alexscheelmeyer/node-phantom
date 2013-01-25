@@ -160,6 +160,7 @@ module.exports={
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
 					case 'pageJsIncluded':
+                    case 'cookieAdded':
 					case 'pageRendered':
 					case 'pageEventSent':
 					case 'pageFileUploaded':
