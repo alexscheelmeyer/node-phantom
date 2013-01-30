@@ -14,20 +14,17 @@ var pages={};
 var pageId=1;
 
 function setupPushNotifications(id, page) {
-	var callbacks=['onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
-				   'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
-				   'onCallback'];
+	var callbacks = [
+    'onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
+    'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
+    'onCallback'
+  ];
+	callbacks.forEach(function(cb) {
+		page[cb] = function() { push([id, cb, Array.prototype.slice.call(arguments)]); }
+	})
 	function push(notification) {
 		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
 	}
-	callbacks.forEach(function(cb) {
-		page[cb]=function(){
-			var notification=Array.prototype.slice.call(arguments);
-			var str=JSON.stringify(notification);
-			if(str.length>436)return;
-			push([id, cb, notification]);
-		};
-	})
 }
 
 controlpage.onAlert=function(msg){
@@ -70,9 +67,9 @@ controlpage.onAlert=function(msg){
 				respond([id, cmdId, 'pageOpened', status]);
 			});
 			break;
-		case 'pageRelease':
-			page.release();
-			respond([id,cmdId,'pageReleased']);
+		case 'pageClose':
+			page.close();
+			respond([id,cmdId,'pageClosed']);
 			break;
 		case 'pageInjectJs':
 			var result=page.injectJs(request[3]);

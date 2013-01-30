@@ -90,8 +90,8 @@ module.exports={
 									request(socket, [id, 'pageOpenWithCallback', url], callback);
 								}
 							},
-							release:function(callback){
-								request(socket,[id,'pageRelease'],callbackOrDummy(callback));
+							close:function(callback){
+								request(socket,[id,'pageClose'],callbackOrDummy(callback));
 							},
 							render:function(filename,callback){
 								request(socket,[id,'pageRender',filename],callbackOrDummy(callback));
@@ -156,7 +156,7 @@ module.exports={
 						cmds[cmdId].cb(null,JSON.parse(response[3]));
 						delete cmds[cmdId];
 						break;
-					case 'pageReleased':
+					case 'pageClosed':
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
 					case 'pageJsIncluded':
