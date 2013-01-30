@@ -54,6 +54,8 @@ module.exports={
 			</script></head><body></body></html>');
 		}).listen();
 		
+		var io=socketio.listen(server,{'log level':1});
+
 		var port=server.address().port;
 		spawnPhantom(port,function(err,phantom){
 			if(err){
@@ -72,8 +74,6 @@ module.exports={
 				cmds[cmdid]={cb:callback};
 				cmdid++;
 			}
-		
-			var io=socketio.listen(server,{'log level':1});
 		
 			io.sockets.on('connection',function(socket){
 				socket.on('res',function(response){
