@@ -160,6 +160,7 @@ module.exports={
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
 					case 'pageJsIncluded':
+                    case 'cookieAdded':
 					case 'pageRendered':
 					case 'pageEventSent':
 					case 'pageFileUploaded':
@@ -184,6 +185,9 @@ module.exports={
 					injectJs:function(filename,callback){
 						request(socket,[0,'injectJs',filename],callbackOrDummy(callback));
 					},
+                    addCookie: function(cookie, callback){
+                        request(socket,[0,'addCookie', cookie],callbackOrDummy(callback));
+                    },                 
 					exit:function(callback){
 						request(socket,[0,'exit'],callbackOrDummy(callback));
 					}
