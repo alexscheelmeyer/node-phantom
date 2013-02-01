@@ -17,14 +17,14 @@ function setupPushNotifications(id, page) {
 	var callbacks=['onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
 				   'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
 				   'onCallback'];
-	function push(notification) {
+	function push(notification){
 		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
 	}
 	callbacks.forEach(function(cb) {
-		page[cb]=function(){
+		page[cb]=function(parm){
 			var notification=Array.prototype.slice.call(arguments);
-			var str=JSON.stringify(notification);
-			if(str.length>436)return;
+			if((cb==='onResourceRequested')&&(parm.url.indexOf('data:image')===0)) return;
+			
 			push([id, cb, notification]);
 		};
 	})
@@ -74,9 +74,9 @@ controlpage.onAlert=function(msg){
 				respond([id, cmdId, 'pageOpened', status]);
 			});
 			break;
-		case 'pageRelease':
-			page.release();
-			respond([id,cmdId,'pageReleased']);
+		case 'pageClose':
+			page.close();
+			respond([id,cmdId,'pageClosed']);
 			break;
 		case 'pageInjectJs':
 			var result=page.injectJs(request[3]);

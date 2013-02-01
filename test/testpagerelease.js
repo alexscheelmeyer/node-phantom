@@ -5,7 +5,7 @@ exports.testPhantomPageRelease=function(beforeExit,assert){
 		assert.ifError(error);
 		ph.createPage(function(err,page){
 			assert.ifError(err);
-			page.release(function(err){
+			page.close(function(err){
 				assert.ifError(err);
 				ph.exit();
 			});
