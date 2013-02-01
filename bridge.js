@@ -47,6 +47,10 @@ controlpage.onAlert=function(msg){
 			var success=phantom.injectJs(request[3]);
 			respond([0,cmdId,'jsInjected',success]);
 			break;
+        case 'addCookie':
+            phantom.addCookie(request[3]);
+            respond([0,cmdId,'cookieAdded',success]);
+            break;
 		case 'exit':
 			respond([0,cmdId,'phantomExited']);	//optimistically to get the response back before the line is cut
 			break;
