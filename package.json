@@ -6,7 +6,7 @@
   "homepage": "https://github.com/alexscheelmeyer/node-phantom",
   "repository": {
     "type": "git",
-    "url": "git://github.com/alexscheelmeyer/node-phantom.git"
+    "url": "git://github.com/sameervitian/node-phantom.git"
   },
   "main": "node-phantom.js",
   "scripts": {
