@@ -21,7 +21,7 @@ module.exports={
 		function spawnPhantom(port,callback){
 			var args=[];
 			for(var parm in options.parameters) {
-				args.push('--' + option + '=' + options.parameters[parm]);
+				args.push('--' + parm + '=' + options.parameters[parm]);
 			}
 			args=args.concat([__dirname + '/bridge.js', port]);
 
