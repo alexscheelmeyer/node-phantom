@@ -191,6 +191,9 @@ module.exports={
                     },                 
 					exit:function(callback){
 						request(socket,[0,'exit'],callbackOrDummy(callback));
+					},
+					on: function(){
+						phantom.on.apply(phantom, arguments);
 					}
 				};
 			
