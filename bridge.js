@@ -83,8 +83,9 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageJsInjected',JSON.stringify(result)]);
 			break;
 		case 'pageIncludeJs':
-			page.includeJs(request[3]);
-			respond([id,cmdId,'pageJsIncluded']);
+			page.includeJs(request[3], function(){
+				respond([id,cmdId,'pageJsIncluded']);
+			});
 			break;
 		case 'pageSendEvent':
 			page.sendEvent(request[3],request[4],request[5]);
