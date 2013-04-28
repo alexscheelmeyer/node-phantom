@@ -72,8 +72,8 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 			page[cb] = function(evt) {
 				if (!events[cb]) events[cb] = [];
 				events[cb].push(evt);
-			}
-		})
+			};
+		});
 		return events;
 	}
 
@@ -81,6 +81,6 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 		return function(err, res) {
 			assert.ifError(err);
 			fn(res);
-		}
+		};
 	}
 };
