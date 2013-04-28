@@ -8,9 +8,6 @@ function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
 	return callback;
 }
-function unwrapArray(arr) {
-	return arr && arr.length == 1 ? arr[0] : arr
-}
 
 module.exports={
 	create:function(callback,options){
@@ -177,7 +174,7 @@ module.exports={
 					var id = request[0];
 					var cmd = request[1];
 					var callback = callbackOrDummy(pages[id] ? pages[id][cmd] : undefined);
-					callback(unwrapArray(request[2]));
+					callback.apply(null, request[2]);
 				});
 				var proxy={
 					createPage:function(callback){					
