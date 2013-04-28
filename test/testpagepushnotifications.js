@@ -64,10 +64,10 @@ exports.testPhantomPagePushNotifications = function(beforeExit,assert) {
 	function registerCallbacks(page) {
 		var events = {};
 		var callbacks = [
-      'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized',/*'onLoadFinished',*/
-      'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged',
-      'onCallback'
-    ];
+		                 'onAlert','onConfirm','onConsoleMessage','onError', 'onInitialized',/*'onLoadFinished',*/
+		                 'onLoadStarted','onPrompt', 'onResourceRequested','onResourceReceived','onUrlChanged',
+		                 'onCallback'
+		];
 		callbacks.forEach(function(cb) {
 			page[cb] = function(evt) {
 				if (!events[cb]) events[cb] = [];
