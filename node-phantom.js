@@ -191,7 +191,9 @@ module.exports={
                     },                 
 					exit:function(callback){
 						request(socket,[0,'exit'],callbackOrDummy(callback));
-					}
+					},
+
+					_phantom: phantom
 				};
 			
 				callback(null,proxy);
