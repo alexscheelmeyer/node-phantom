@@ -198,7 +198,8 @@ module.exports={
 					},
 					on: function(){
 						phantom.on.apply(phantom, arguments);
-					}
+					},
+					_phantom: phantom
 				};
 			
 				callback(null,proxy);
