@@ -28,8 +28,8 @@ exports.testPhantomPageEvaluate=function(beforeExit,assert){
 							return [document.getElementsByTagName('h1')[0].innerText,document.getElementsByTagName('script').length];
 						},function(err,result){
 							assert.ifError(err);
-							assert.equal(result[0],'Hello Test');	//the script should have been executed
-							assert.equal(result[1],1);				//it should have added a new script-tag (see: https://groups.google.com/forum/?fromgroups#!topic/phantomjs/G4xcnSLrMw8)
+							assert.equal(result[0],'Hello Test');  //the script should have been executed
+							assert.equal(result[1],1);             //it should have added a new script-tag (see: https://groups.google.com/forum/?fromgroups#!topic/phantomjs/G4xcnSLrMw8)
 							server.close();
 							ph.exit();
 						});

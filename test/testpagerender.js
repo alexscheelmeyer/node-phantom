@@ -29,7 +29,7 @@ exports.testPhantomPageRender=function(beforeExit,assert){
 				page.render(testFilename,function(err){
 					assert.ifError(err);
 					assert.equal(fileHash(testFilename),fileHash(verifyFilename));
-					fs.unlinkSync(testFilename);	//clean up the testfile
+					fs.unlinkSync(testFilename); //clean up the testfile
 					server.close();
 					ph.exit();
 				});
