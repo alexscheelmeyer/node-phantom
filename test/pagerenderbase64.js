@@ -2,6 +2,7 @@ var http=require('http');
 var phantom=require('../node-phantom');
 var fs=require('fs');
 var crypto = require('crypto');
+var assert=require('assert');
 
 function fileHash(filename){
 	var shasum=crypto.createHash('sha256');
@@ -23,21 +24,25 @@ var server=http.createServer(function(request,response){
 
 var verifyFilename=__dirname+'/files/verifyrender.png';
 
-exports.testPhantomPageRenderBase64=function(beforeExit,assert){
-	phantom.create(function(error,ph){
-		assert.ifError(error);
-		ph.createPage(function(err,page){
-			assert.ifError(err);
-			page.open('http://localhost:'+server.address().port,function(err,status){
+describe('Phantom Page',function(){
+	this.timeout(5000);
+	it('should be able to render base 64',function(done){
+		phantom.create(function(error,ph){
+			assert.ifError(error);
+			ph.createPage(function(err,page){
 				assert.ifError(err);
-				assert.equal(status,'success');
-				page.renderBase64('png',function(err, imagedata){
+				page.open('http://localhost:'+server.address().port,function(err,status){
 					assert.ifError(err);
-					assert.equal(bufferHash(new Buffer(imagedata, 'base64')),fileHash(verifyFilename));
-					server.close();
-					ph.exit();
+					assert.equal(status,'success');
+					page.renderBase64('png',function(err, imagedata){
+						assert.ifError(err);
+						assert.equal(bufferHash(new Buffer(imagedata, 'base64')),fileHash(verifyFilename));
+						server.close();
+						ph.exit();
+						done();
+					});
 				});
 			});
 		});
 	});
-};
+});
