@@ -24,7 +24,7 @@ function setupPushNotifications(id, page) {
 		page[cb]=function(parm){
 			var notification=Array.prototype.slice.call(arguments);
 			if((cb==='onResourceRequested')&&(parm.url.indexOf('data:image')===0)) return;
-			
+
 			push([id, cb, notification]);
 		};
 	})
@@ -98,6 +98,10 @@ controlpage.onAlert=function(msg){
 		case 'pageEvaluate':
 			var result=page.evaluate.apply(page,request.slice(3));
 			respond([id,cmdId,'pageEvaluated',JSON.stringify(result)]);
+			break;
+        case 'pageEvaluateAsync':
+			page.evaluateAsync.apply(page,request.slice(3));
+			respond([id,cmdId,'pageEvaluatedAsync']);
 			break;
 		case 'pageRender':
 			page.render(request[3]);
