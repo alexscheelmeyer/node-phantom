@@ -15,8 +15,8 @@ var pageId=1;
 
 function setupPushNotifications(id, page) {
 	var callbacks=['onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
-				   'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
-				   'onCallback'];
+	               'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onUrlChanged',
+	               'onCallback'];
 	function push(notification){
 		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
 	}
@@ -27,7 +27,7 @@ function setupPushNotifications(id, page) {
 
 			push([id, cb, notification]);
 		};
-	})
+	});
 }
 
 controlpage.onAlert=function(msg){
@@ -47,12 +47,12 @@ controlpage.onAlert=function(msg){
 			var success=phantom.injectJs(request[3]);
 			respond([0,cmdId,'jsInjected',success]);
 			break;
-        case 'addCookie':
-            phantom.addCookie(request[3]);
-            respond([0,cmdId,'cookieAdded',success]);
-            break;
+		case 'addCookie':
+			phantom.addCookie(request[3]);
+			respond([0,cmdId,'cookieAdded',success]);
+			break;
 		case 'exit':
-			respond([0,cmdId,'phantomExited']);	//optimistically to get the response back before the line is cut
+			respond([0,cmdId,'phantomExited']); //optimistically to get the response back before the line is cut
 			break;
 		case 'exitAck':
 			phantom.exit();

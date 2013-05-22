@@ -36,10 +36,10 @@ module.exports={
 			phantom.on('exit',function(code){
 				exitCode=code;
 			});
-			setTimeout(function(){	//wait a bit to see if the spawning of phantomjs immediately fails due to bad path or similar
+			setTimeout(function(){ //wait a bit to see if the spawning of phantomjs immediately fails due to bad path or similar
 				callback(exitCode!==0,phantom);
 			},100);
-		};
+		}
 		
 		var server=http.createServer(function(request,response){
 			response.writeHead(200,{"Content-Type": "text/html"});
@@ -68,7 +68,7 @@ module.exports={
 			var cmdid=0;
 			function request(socket,args,callback){
 				args.splice(1,0,cmdid);
-	//			console.log('requesting:'+args);
+//				console.log('requesting:'+args);
 				socket.emit('cmd',JSON.stringify(args));
 
 				cmds[cmdid]={cb:callback};
@@ -77,7 +77,7 @@ module.exports={
 		
 			io.sockets.on('connection',function(socket){
 				socket.on('res',function(response){
-	//				console.log(response);
+//					console.log(response);
 					var id=response[0];
 					var cmdId=response[1];
 					switch(response[2]){
@@ -144,7 +144,7 @@ module.exports={
 						delete cmds[cmdId];
 						break;
 					case 'pageOpened':
-						if(cmds[cmdId]!==undefined){	//if page is redirected, the pageopen event is called again - we do not want that currently.
+						if(cmds[cmdId]!==undefined){ //if page is redirected, the pageopen event is called again - we do not want that currently.
 							if(cmds[cmdId].cb !== undefined){
 								cmds[cmdId].cb(null, response[3]);
 							}
@@ -164,7 +164,7 @@ module.exports={
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
 					case 'pageJsIncluded':
-                    case 'cookieAdded':
+					case 'cookieAdded':
 					case 'pageRendered':
 					case 'pageEventSent':
 					case 'pageFileUploaded':
@@ -175,8 +175,8 @@ module.exports={
 					default:
 						console.error('got unrecognized response:'+response);
 						break;
-					}				
-				});		
+					}
+				});
 				socket.on('push', function(request) {
 					var id = request[0];
 					var cmd = request[1];
@@ -184,15 +184,15 @@ module.exports={
 					callback(unwrapArray(request[2]));
 				});
 				var proxy={
-					createPage:function(callback){					
+					createPage:function(callback){
 						request(socket,[0,'createPage'],callbackOrDummy(callback));
 					},
 					injectJs:function(filename,callback){
 						request(socket,[0,'injectJs',filename],callbackOrDummy(callback));
 					},
-                    addCookie: function(cookie, callback){
-                        request(socket,[0,'addCookie', cookie],callbackOrDummy(callback));
-                    },                 
+					addCookie: function(cookie, callback){
+						request(socket,[0,'addCookie', cookie],callbackOrDummy(callback));
+					},
 					exit:function(callback){
 						request(socket,[0,'exit'],callbackOrDummy(callback));
 					},
