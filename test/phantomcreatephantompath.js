@@ -6,6 +6,6 @@ describe('Phantom Create',function(){
 		phantom.create(function(error,ph){
 			assert.equal(error,true);
 			done();
-		},{phantomPath:'@@@'});
+		},{phantomPath:'___nonexistent___'});
 	});
 });
