@@ -32,6 +32,9 @@ module.exports={
 			phantom.stderr.on('data',function(data){
 				return console.warn('phantom stderr: '+data);
 			});
+			phantom.on('error',function(){
+				exitCode=-1;
+			});
 			var exitCode=0;
 			phantom.on('exit',function(code){
 				exitCode=code;
