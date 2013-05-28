@@ -32,15 +32,16 @@ module.exports={
 			phantom.stderr.on('data',function(data){
 				return console.warn('phantom stderr: '+data);
 			});
-			var exitCode=0;
-			phantom.on('error',function(){
-				exitCode=-1;
-			});
-			phantom.on('exit',function(code){
-				exitCode=code;
-			});
+			var hasErrors = false;
+			var onError = function () {
+				hasErrors = true;
+			}
+			phantom.on('error', onError);
+			phantom.on('exit', onError);
 			setTimeout(function(){ //wait a bit to see if the spawning of phantomjs immediately fails due to bad path or similar
-				callback(exitCode!==0,phantom);
+				phantom.removeListener('error', onError);
+				phantom.removeListener('exit', onError);
+				callback(hasErrors, phantom);
 			},100);
 		}
 		
