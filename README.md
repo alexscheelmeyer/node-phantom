@@ -88,6 +88,26 @@ This can for example be used together with the [PhantomJS package](https://npmjs
 phantom.create(callback,{phantomPath:require('phantomjs').path})
 ```
 
+### Working with the API
+
+Once you have the phantom instance you can use it much as you would the real PhantomJS, node-phantom tries to mimic the api.
+
+An exception is that since this is a wrapper that does network communication to control PhantomJS, _all_ methods are asynchronous and
+with a callback even when the PhantomJS version is synchronous.
+
+Another notable exception is the page.evaluate method (and page.evaluateAsync method) that since PhantomJS 1.6 has a provision for extra arguments
+to be passed into the evaluated function. In the node-phantom world these arguments are placed _after_ the callback. So the
+order is evaluatee, callback, optional arguments. In code it looks like :
+
+```javascript
+page.evaluate(function(s){
+	return document.querySelector(s).innerText;
+},function(err,title){
+	console.log(title);
+},'title');
+```
+
+
 You can also have a look at the test folder to see some examples of using the API.
 
 Other
