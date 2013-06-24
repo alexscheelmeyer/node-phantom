@@ -123,7 +123,7 @@ controlpage.onAlert=function(msg){
 			page[request[3]] = eval('(' + request[4] + ')')
 			break;
 		case 'pageSetViewport':
-			page.viewportSize = {width:request[3], height:request[4]}
+			page.viewportSize = {width:request[3], height:request[4]};
 			break;
 		default:
 			console.error('unrecognized request:'+request);
