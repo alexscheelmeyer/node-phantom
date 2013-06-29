@@ -59,8 +59,7 @@ module.exports={
 		
 		var io=socketio.listen(server,{'log level':1});
 
-		var port=server.address().port;
-		spawnPhantom(port,function(err,phantom){
+		var listen = function(err,phantom){
 			if(err){
 				server.close();
 				callback(true);
@@ -218,6 +217,11 @@ module.exports={
 					server.close();
 				}
 			});
+		};
+
+		server.on('listening', function() {
+			var port=server.address().port;
+			spawnPhantom(port, listen);
 		});
 	}
 };
