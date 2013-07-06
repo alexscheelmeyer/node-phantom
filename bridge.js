@@ -124,6 +124,7 @@ controlpage.onAlert=function(msg){
 			break;
 		case 'pageSetViewport':
 			page.viewportSize = {width:request[3], height:request[4]};
+			respond([id,cmdId,'pageSetViewportDone']);
 			break;
 		default:
 			console.error('unrecognized request:'+request);
