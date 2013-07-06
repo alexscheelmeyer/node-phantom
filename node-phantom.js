@@ -131,6 +131,7 @@ module.exports={
 							},
 							setViewport: function(viewport, callback) {
 								request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
+							}
 						};
 						pages[id] = pageProxy;
 						cmds[cmdId].cb(null,pageProxy);
