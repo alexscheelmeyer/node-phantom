@@ -129,7 +129,7 @@ module.exports={
 							setFn: function(pageCallbackName, fn, callback) {
 								request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
 							},
-							setViewport: function(viewport, fn, callback) {
+							setViewport: function(viewport, callback) {
 								request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
 							}
 						};
