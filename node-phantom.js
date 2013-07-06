@@ -163,10 +163,10 @@ module.exports={
 						break;
 					case 'pageGetDone':
 					case 'pageEvaluated':
+					case 'pageViewport':
 						cmds[cmdId].cb(null,JSON.parse(response[3]));
 						delete cmds[cmdId];
 						break;
-					case 'pageViewportSet':
 					case 'pageClosed':
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
