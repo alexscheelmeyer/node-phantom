@@ -169,6 +169,7 @@ module.exports={
 					case 'pageClosed':
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
+					case 'pageSetViewportDone':
 					case 'pageJsIncluded':
 					case 'cookieAdded':
 					case 'pageRendered':
