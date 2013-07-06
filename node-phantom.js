@@ -117,7 +117,7 @@ module.exports={
 							evaluate:function(evaluator,callback){
 								request(socket,[id,'pageEvaluate',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 							},
-                            evaluateAsync:function(evaluator,callback){
+                    					evaluateAsync:function(evaluator,callback){
 								request(socket,[id,'pageEvaluateAsync',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 							},
 							set:function(name,value,callback){
@@ -128,7 +128,9 @@ module.exports={
 							},
 							setFn: function(pageCallbackName, fn, callback) {
 								request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
-							}
+							},
+							setViewport: function(viewport, callback) {
+								request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
 						};
 						pages[id] = pageProxy;
 						cmds[cmdId].cb(null,pageProxy);
@@ -163,6 +165,7 @@ module.exports={
 						cmds[cmdId].cb(null,JSON.parse(response[3]));
 						delete cmds[cmdId];
 						break;
+					case 'pageViewportSet':
 					case 'pageClosed':
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
