@@ -16,7 +16,8 @@
     "socket.io": ">=0.9.6"
   },
   "devDependencies": {
-     "mocha": "*"
+     "mocha": "*",
+     "pngjs": "0.4.0"
   },
   "optionalDependencies": {},
   "engines": {
