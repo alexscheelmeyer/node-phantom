@@ -117,7 +117,7 @@ module.exports={
 							evaluate:function(evaluator,callback){
 								request(socket,[id,'pageEvaluate',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 							},
-                            evaluateAsync:function(evaluator,callback){
+							evaluateAsync:function(evaluator,callback){
 								request(socket,[id,'pageEvaluateAsync',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 							},
 							set:function(name,value,callback){
@@ -128,6 +128,9 @@ module.exports={
 							},
 							setFn: function(pageCallbackName, fn, callback) {
 								request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
+							},
+							setViewport: function(viewport, callback) {
+								request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
 							}
 						};
 						pages[id] = pageProxy;
@@ -166,11 +169,13 @@ module.exports={
 					case 'pageClosed':
 						delete pages[id]; // fallthru
 					case 'pageSetDone':
+					case 'pageSetViewportDone':
 					case 'pageJsIncluded':
 					case 'cookieAdded':
 					case 'pageRendered':
 					case 'pageEventSent':
 					case 'pageFileUploaded':
+					case 'pageSetViewportDone':
 					case 'pageEvaluatedAsync':
 						cmds[cmdId].cb(null);
 						delete cmds[cmdId];
