@@ -175,6 +175,7 @@ module.exports={
 					case 'pageRendered':
 					case 'pageEventSent':
 					case 'pageFileUploaded':
+					case 'pageSetViewportDone':
 					case 'pageEvaluatedAsync':
 						cmds[cmdId].cb(null);
 						delete cmds[cmdId];
