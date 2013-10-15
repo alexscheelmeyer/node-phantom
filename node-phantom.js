@@ -71,7 +71,7 @@ module.exports={
 				var cmdid=0;
 				function request(socket,args,callback){
 					args.splice(1,0,cmdid);
-	//				console.log('requesting:'+args);
+//					console.log('requesting:'+args);
 					socket.emit('cmd',JSON.stringify(args));
 	
 					cmds[cmdid]={cb:callback};
@@ -80,7 +80,7 @@ module.exports={
 			
 				io.sockets.on('connection',function(socket){
 					socket.on('res',function(response){
-	//					console.log(response);
+//						console.log(response);
 						var id=response[0];
 						var cmdId=response[1];
 						switch(response[2]){
@@ -128,8 +128,11 @@ module.exports={
 								},
 								setFn: function(pageCallbackName, fn, callback) {
 									request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
+								},
+								setViewport: function(viewport, callback) {
+									request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
 								}
-							};
+							}
 							pages[id] = pageProxy;
 							cmds[cmdId].cb(null,pageProxy);
 							delete cmds[cmdId];
@@ -171,6 +174,7 @@ module.exports={
 						case 'pageRendered':
 						case 'pageEventSent':
 						case 'pageFileUploaded':
+						case 'pageSetViewportDone':
 						case 'pageEvaluatedAsync':
 							cmds[cmdId].cb(null);
 							delete cmds[cmdId];

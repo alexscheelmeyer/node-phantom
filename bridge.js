@@ -122,6 +122,10 @@ controlpage.onAlert=function(msg){
 		case 'pageSetFn':
 			page[request[3]] = eval('(' + request[4] + ')')
 			break;
+		case 'pageSetViewport':
+			page.viewportSize = {width:request[3], height:request[4]};
+			respond([id,cmdId,'pageSetViewportDone']);
+			break;
 		default:
 			console.error('unrecognized request:'+request);
 			break;
