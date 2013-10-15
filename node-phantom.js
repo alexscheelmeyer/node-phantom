@@ -32,15 +32,15 @@ module.exports={
 			phantom.stderr.on('data',function(data){
 				return console.warn('phantom stderr: '+data);
 			});
-			var exitCode=0;
+			var hasErrors=false;
 			phantom.on('error',function(){
-				exitCode=-1;
+				hasErrors=true;
 			});
 			phantom.on('exit',function(code){
-				exitCode=code;
+				hasErrors=true; //if phantom exits it is always an error
 			});
 			setTimeout(function(){ //wait a bit to see if the spawning of phantomjs immediately fails due to bad path or similar
-				callback(exitCode!==0,phantom);
+				callback(hasErrors,phantom);
 			},100);
 		}
 		
@@ -55,8 +55,7 @@ module.exports={
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function () {
-			
+		}).listen(function(){			
 			var io=socketio.listen(server,{'log level':1});
 	
 			var port=server.address().port;
@@ -201,6 +200,7 @@ module.exports={
 							request(socket,[0,'addCookie', cookie],callbackOrDummy(callback));
 						},
 						exit:function(callback){
+							phantom.removeListener('exit',prematureExitHandler); //an exit is no longer premature now
 							request(socket,[0,'exit'],callbackOrDummy(callback));
 						},
 						on: function(){
@@ -214,14 +214,12 @@ module.exports={
 	
 				// An exit event listener that is registered AFTER the phantomjs process
 				// is successfully created.
-				phantom.on('exit', function(code, signal){
-	
-					// Close server upon phantom crash.
-					if(code !== 0 && signal === null){
-						console.warn('phantom crash: code '+code);
-						server.close();
-					}
-				});
+				var prematureExitHandler=function(code,signal){
+					console.warn('phantom crash: code '+code);
+					server.close();
+				};
+				
+				phantom.on('exit',prematureExitHandler);
 			});
 		});
 	}
