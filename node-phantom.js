@@ -3,6 +3,7 @@
 var http=require('http');
 var socketio=require('socket.io');
 var child=require('child_process');
+var which = require('which');
 
 function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
@@ -15,7 +16,7 @@ function unwrapArray(arr) {
 module.exports={
 	create:function(callback,options){
 		if(options===undefined)options={};
-		if(options.phantomPath===undefined)options.phantomPath='phantomjs';
+		if(options.phantomPath===undefined)options.phantomPath=which.sync('phantomjs');
 		if(options.parameters===undefined)options.parameters={};
 
 		function spawnPhantom(port,callback){
