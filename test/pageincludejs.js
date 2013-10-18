@@ -33,7 +33,7 @@ describe('Phantom Page',function(){
 								assert.ifError(err);
 								assert.equal(result[0],'Hello Test');  //the script should have been executed
 								assert.equal(result[1],1);             //it should have added a new script-tag (see: https://groups.google.com/forum/?fromgroups#!topic/phantomjs/G4xcnSLrMw8)
-								server.close();
+//								server.close();
 								ph.exit();
 								done();
 							});
@@ -43,4 +43,27 @@ describe('Phantom Page',function(){
 			});
 		});
 	});
+	
+	it('should be able to include twice',function(done){
+		phantom.create(function(error,ph){
+			assert.ifError(error);
+			ph.createPage(function(err,page){
+				assert.ifError(err);
+				page.open('http://localhost:'+server.address().port,function(err,status){
+					assert.ifError(err);
+					assert.equal(status,'success');
+					page.includeJs('http://localhost:'+server.address().port+'/test.js',function(err){
+						assert.ifError(err);
+						page.includeJs('http://localhost:'+server.address().port+'/test.js',function(err){
+							assert.ifError(err);
+//							server.close();
+							ph.exit();
+							done();
+						});
+					});
+				});
+			});
+		});
+	});
+	
 });

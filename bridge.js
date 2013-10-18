@@ -83,8 +83,11 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageJsInjected',JSON.stringify(result)]);
 			break;
 		case 'pageIncludeJs':
+			var alreadyGotCallback=false;
 			page.includeJs(request[3], function(){
+				if(alreadyGotCallback)return;
 				respond([id,cmdId,'pageJsIncluded']);
+				alreadyGotCallback=true;
 			});
 			break;
 		case 'pageSendEvent':
