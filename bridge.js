@@ -74,6 +74,14 @@ controlpage.onAlert=function(msg){
 				respond([id, cmdId, 'pageOpened', status]);
 			});
 			break;
+		case 'pagePost':
+			page.open(request[3], 'post', request[4]);
+			break;
+		case 'pagePostWithCallback':
+			page.open(request[3], 'post', request[4], function(status){
+				respond([id, cmdId, 'pageOpened', status]);
+			});
+			break;
 		case 'pageClose':
 			page.close();
 			respond([id,cmdId,'pageClosed']);
