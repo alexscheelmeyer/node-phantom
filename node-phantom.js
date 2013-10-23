@@ -92,6 +92,13 @@ module.exports={
 										request(socket, [id, 'pageOpenWithCallback', url], callback);
 									}
 								},
+								post:function(url, data, callback){
+									if(callback === undefined){
+										request(socket, [id, 'pagePost', url, data]);
+									}else{
+										request(socket, [id, 'pagePostWithCallback', url, data], callback);
+									}
+								},
 								close:function(callback){
 									request(socket,[id,'pageClose'],callbackOrDummy(callback));
 								},
