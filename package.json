@@ -4,9 +4,13 @@
   "description": "bridge between node.js and PhantomJS",
   "version": "0.2.5",
   "homepage": "https://github.com/alexscheelmeyer/node-phantom",
+  "license": "Public Domain",
   "repository": {
     "type": "git",
     "url": "git://github.com/alexscheelmeyer/node-phantom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexscheelmeyer/node-phantom/issues"
   },
   "main": "node-phantom.js",
   "files": [
@@ -21,10 +25,9 @@
     "socket.io": ">=0.9.6"
   },
   "devDependencies": {
-     "mocha": "*",
-     "pngjs": "0.4.0"
+    "mocha": "*",
+    "pngjs": "0.4.0"
   },
-  "optionalDependencies": {},
   "engines": {
     "node": "*"
   }
