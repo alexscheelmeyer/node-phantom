@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/alexscheelmeyer/node-phantom.png)](https://travis-ci.org/alexscheelmeyer/node-phantom)
+
 Node-phantom
 ---------------
 
