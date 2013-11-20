@@ -1,3 +1,7 @@
+[![NPM version](https://badge.fury.io/js/node-phantom.png)](https://badge.fury.io/js/node-phantom)
+[![Dependency Status](https://david-dm.org/alexscheelmeyer/node-phantom.png)](https://david-dm.org/alexscheelmeyer/node-phantom)
+[![devDependency Status](https://david-dm.org/alexscheelmeyer/node-phantom/dev-status.png)](https://david-dm.org/alexscheelmeyer/node-phantom#info=devDependencies)
+
 Node-phantom
 ---------------
 
