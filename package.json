@@ -9,6 +9,11 @@
     "url": "git://github.com/alexscheelmeyer/node-phantom.git"
   },
   "main": "node-phantom.js",
+  "files": [
+    "bridge.js",
+    "node-phantom.js",
+    "README.md"
+  ],
   "scripts": {
     "test": "mocha"
   },
