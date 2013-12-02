@@ -170,12 +170,14 @@ module.exports={
 						case 'pageSetDone':
 						case 'pageJsIncluded':
 						case 'cookieAdded':
-						case 'pageRendered':
 						case 'pageEventSent':
 						case 'pageFileUploaded':
 						case 'pageSetViewportDone':
 						case 'pageEvaluatedAsync':
 							cmds[cmdId].cb(null);
+							delete cmds[cmdId];
+							break;
+						case 'pageRendered':
 							delete cmds[cmdId];
 							break;
 						default:
