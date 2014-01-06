@@ -83,8 +83,11 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageJsInjected',JSON.stringify(result)]);
 			break;
 		case 'pageIncludeJs':
+			var alreadyGotCallback=false;
 			page.includeJs(request[3], function(){
+				if(alreadyGotCallback)return;
 				respond([id,cmdId,'pageJsIncluded']);
+				alreadyGotCallback=true;
 			});
 			break;
 		case 'pageSendEvent':
@@ -121,6 +124,10 @@ controlpage.onAlert=function(msg){
 			break;
 		case 'pageSetFn':
 			page[request[3]] = eval('(' + request[4] + ')')
+			break;
+		case 'pageSetViewport':
+			page.viewportSize = {width:request[3], height:request[4]};
+			respond([id,cmdId,'pageSetViewportDone']);
 			break;
 		default:
 			console.error('unrecognized request:'+request);
