@@ -5,9 +5,10 @@ var socketio=require('socket.io');
 var child=require('child_process');
 
 function callbackOrDummy(callback){
-	if(callback===undefined)callback=function(){};
+	if(!callback) callback=function(){};
 	return callback;
 }
+
 function unwrapArray(arr) {
 	return arr && arr.length == 1 ? arr[0] : arr
 }
