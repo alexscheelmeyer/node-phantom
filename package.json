@@ -22,11 +22,11 @@
     "test": "mocha"
   },
   "dependencies": {
-    "socket.io": ">=0.9.6"
+    "socket.io": "~0.9.16"
   },
   "devDependencies": {
-    "mocha": "*",
-    "pngjs": "0.4.0"
+    "mocha": "~1.17.1",
+    "pngjs": "~0.4.0"
   },
   "engines": {
     "node": "*"
