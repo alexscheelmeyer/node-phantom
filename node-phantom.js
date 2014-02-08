@@ -130,6 +130,9 @@ module.exports={
 								},
 								setViewport: function(viewport, callback) {
 									request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
+								},
+								setPaperSize: function(paperSize, callback) {
+									request(socket, [id, 'pageSetPaperSize', paperSize], callbackOrDummy(callback));
 								}
 							}
 							pages[id] = pageProxy;
@@ -174,6 +177,7 @@ module.exports={
 						case 'pageEventSent':
 						case 'pageFileUploaded':
 						case 'pageSetViewportDone':
+						case 'pageSetPaperSizeDone':
 						case 'pageEvaluatedAsync':
 							cmds[cmdId].cb(null);
 							delete cmds[cmdId];

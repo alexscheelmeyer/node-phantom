@@ -129,6 +129,10 @@ controlpage.onAlert=function(msg){
 			page.viewportSize = {width:request[3], height:request[4]};
 			respond([id,cmdId,'pageSetViewportDone']);
 			break;
+		case 'pageSetPaperSize':
+			page.paperSize = request[3];
+			respond([id,cmdId,'pageSetPaperSizeDone']);
+			break;
 		default:
 			console.error('unrecognized request:'+request);
 			break;
