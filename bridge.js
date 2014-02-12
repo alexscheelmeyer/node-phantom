@@ -16,7 +16,7 @@ var pageId=1;
 function setupPushNotifications(id, page) {
 	var callbacks=['onAlert','onConfirm','onConsoleMessage','onError','onInitialized','onLoadFinished',
 	               'onLoadStarted','onPrompt','onResourceRequested','onResourceReceived','onResourceError',
-	               'onUrlChanged','onCallback'];
+	               'onUrlChanged','onCallback', 'onNavigationRequested'];
 	function push(notification){
 		controlpage.evaluate('function(){socket.emit("push",'+JSON.stringify(notification)+');}');
 	}
