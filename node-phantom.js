@@ -17,6 +17,7 @@ module.exports={
 		if(options===undefined)options={};
 		if(options.phantomPath===undefined)options.phantomPath='phantomjs';
 		if(options.parameters===undefined)options.parameters={};
+		if(options.port===undefined)options.port=9000;
 
 		function spawnPhantom(port,callback){
 			var args=[];
@@ -55,7 +56,7 @@ module.exports={
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function(){			
+		}).listen(options.port, function(){			
 			var io=socketio.listen(server,{'log level':1});
 	
 			var port=server.address().port;
