@@ -43,7 +43,7 @@ module.exports={
 				callback(hasErrors,phantom);
 			},100);
 		}
-		
+
 		var server=http.createServer(function(request,response){
 			response.writeHead(200,{"Content-Type": "text/html"});
 			response.end('<html><head><script src="/socket.io/socket.io.js" type="text/javascript"></script><script type="text/javascript">\n\
@@ -55,9 +55,14 @@ module.exports={
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function(){			
+		}).listen(function(){
 			var io=socketio.listen(server,{'log level':1});
-	
+
+            // Force XHR polling
+            io.set('transports', [
+                'xhr-polling'
+            ]);
+
 			var port=server.address().port;
 			spawnPhantom(port,function(err,phantom){
 				if(err){
@@ -72,11 +77,11 @@ module.exports={
 					args.splice(1,0,cmdid);
 //					console.log('requesting:'+args);
 					socket.emit('cmd',JSON.stringify(args));
-	
+
 					cmds[cmdid]={cb:callback};
 					cmdid++;
 				}
-			
+
 				io.sockets.on('connection',function(socket){
 					socket.on('res',function(response){
 //						console.log(response);
@@ -208,17 +213,17 @@ module.exports={
 						},
 						_phantom: phantom
 					};
-				
+
 					callback(null,proxy);
 				});
-	
+
 				// An exit event listener that is registered AFTER the phantomjs process
 				// is successfully created.
 				var prematureExitHandler=function(code,signal){
 					console.warn('phantom crash: code '+code);
 					server.close();
 				};
-				
+
 				phantom.on('exit',prematureExitHandler);
 			});
 		});
