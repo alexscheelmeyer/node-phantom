@@ -13,7 +13,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "socket.io": ">=0.9.6"
+    "socket.io": "^0.9.6"
   },
   "devDependencies": {
      "mocha": "*",
@@ -21,6 +21,6 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": "*"
+    "node": ">=0.8"
   }
 }
