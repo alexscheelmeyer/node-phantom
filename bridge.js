@@ -10,6 +10,21 @@ function respond(response){
 	controlpage.evaluate('function(){socket.emit("res",'+JSON.stringify(response)+');}');
 }
 
+function setKey(obj, key, value) {
+	// key can be either string or array of strings
+	if (!(typeof obj === 'object') || !key || !key.length) {
+		return;
+	}
+	key = (typeof key === 'string') ? key.split('.') : key;
+	try {
+		if (key.length === 1) {
+			obj[key[0]] = value;
+		} else {
+			setKey(obj[key[0]], key.slice(1), value);
+		}
+	} catch (err) {} // TypeError ?
+}
+
 var pages={};
 var pageId=1;
 
@@ -115,7 +130,7 @@ controlpage.onAlert=function(msg){
 			respond([id,cmdId,'pageRenderBase64Done', result]);
 			break;
 		case 'pageSet':
-			page[request[3]]=request[4];
+			setKey(page, request[3], request[4]);
 			respond([id,cmdId,'pageSetDone']);
 			break;
 		case 'pageGet':
