@@ -76,7 +76,8 @@ module.exports={
 					cmds[cmdid]={cb:callback};
 					cmdid++;
 				}
-			
+			     
+                var connectionSocket = null;
 				io.sockets.on('connection',function(socket){
 					socket.on('res',function(response){
 //						console.log(response);
@@ -87,49 +88,49 @@ module.exports={
 							var pageProxy={
 								open:function(url, callback){
 									if(callback === undefined){
-										request(socket, [id, 'pageOpen', url]);
+										request(connectionSocket, [id, 'pageOpen', url]);
 									}else{
-										request(socket, [id, 'pageOpenWithCallback', url], callback);
+										request(connectionSocket, [id, 'pageOpenWithCallback', url], callback);
 									}
 								},
 								close:function(callback){
-									request(socket,[id,'pageClose'],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageClose'],callbackOrDummy(callback));
 								},
 								render:function(filename,callback){
-									request(socket,[id,'pageRender',filename],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageRender',filename],callbackOrDummy(callback));
 								},
 								renderBase64:function(extension,callback){
-									request(socket,[id,'pageRenderBase64',extension],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageRenderBase64',extension],callbackOrDummy(callback));
 								},
 								injectJs:function(url,callback){
-									request(socket,[id,'pageInjectJs',url],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageInjectJs',url],callbackOrDummy(callback));
 								},
 								includeJs:function(url,callback){
-									request(socket,[id,'pageIncludeJs',url],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageIncludeJs',url],callbackOrDummy(callback));
 								},
 								sendEvent:function(event,x,y,callback){
-									request(socket,[id,'pageSendEvent',event,x,y],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageSendEvent',event,x,y],callbackOrDummy(callback));
 								},
 								uploadFile:function(selector,filename,callback){
-									request(socket,[id,'pageUploadFile',selector,filename],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageUploadFile',selector,filename],callbackOrDummy(callback));
 								},
 								evaluate:function(evaluator,callback){
-									request(socket,[id,'pageEvaluate',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageEvaluate',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 								},
 	                            evaluateAsync:function(evaluator,callback){
-									request(socket,[id,'pageEvaluateAsync',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageEvaluateAsync',evaluator.toString()].concat(Array.prototype.slice.call(arguments,2)),callbackOrDummy(callback));
 								},
 								set:function(name,value,callback){
-									request(socket,[id,'pageSet',name,value],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageSet',name,value],callbackOrDummy(callback));
 								},
 								get:function(name,callback){
-									request(socket,[id,'pageGet',name],callbackOrDummy(callback));
+									request(connectionSocket,[id,'pageGet',name],callbackOrDummy(callback));
 								},
 								setFn: function(pageCallbackName, fn, callback) {
-									request(socket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
+									request(connectionSocket, [id, 'pageSetFn', pageCallbackName, fn.toString()], callbackOrDummy(callback));
 								},
 								setViewport: function(viewport, callback) {
-									request(socket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
+									request(connectionSocket, [id, 'pageSetViewport', viewport.width, viewport.height], callbackOrDummy(callback));
 								}
 							}
 							pages[id] = pageProxy;
@@ -137,7 +138,7 @@ module.exports={
 							delete cmds[cmdId];
 							break;
 						case 'phantomExited':
-							request(socket,[0,'exitAck']);
+							request(connectionSocket,[0,'exitAck']);
 							server.close();
 							io.set('client store expiration', 0);
 							cmds[cmdId].cb();
@@ -191,25 +192,29 @@ module.exports={
 					});
 					var proxy={
 						createPage:function(callback){
-							request(socket,[0,'createPage'],callbackOrDummy(callback));
+							request(connectionSocket,[0,'createPage'],callbackOrDummy(callback));
 						},
 						injectJs:function(filename,callback){
-							request(socket,[0,'injectJs',filename],callbackOrDummy(callback));
+							request(connectionSocket,[0,'injectJs',filename],callbackOrDummy(callback));
 						},
 						addCookie: function(cookie, callback){
-							request(socket,[0,'addCookie', cookie],callbackOrDummy(callback));
+							request(connectionSocket,[0,'addCookie', cookie],callbackOrDummy(callback));
 						},
 						exit:function(callback){
 							phantom.removeListener('exit',prematureExitHandler); //an exit is no longer premature now
-							request(socket,[0,'exit'],callbackOrDummy(callback));
+							request(connectionSocket,[0,'exit'],callbackOrDummy(callback));
 						},
 						on: function(){
 							phantom.on.apply(phantom, arguments);
 						},
 						_phantom: phantom
 					};
-				
-					callback(null,proxy);
+				    
+                    var executeCallback = !connectionSocket;
+                    connectionSocket = socket;
+                    if(executeCallback) {
+                        callback(null,proxy);
+                    }
 				});
 	
 				// An exit event listener that is registered AFTER the phantomjs process
