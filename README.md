@@ -85,7 +85,7 @@ You may also pass in a custom path if you need to select a specific instance of 
 This can for example be used together with the [PhantomJS package](https://npmjs.org/package/phantomjs) like so:
 
 ```javascript
-phantom.create(callback,{phantomPath:require('phantomjs').path})
+phantom.create(callback,{binary:require('phantomjs').path})
 ```
 
 ### Working with the API
