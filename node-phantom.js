@@ -55,7 +55,7 @@ module.exports={
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function(){			
+		}).listen(null,'127.0.0.1',function(){			
 			var io=socketio.listen(server,{'log level':1});
 	
 			var port=server.address().port;
