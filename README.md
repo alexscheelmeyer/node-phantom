@@ -1,3 +1,6 @@
+It seems like [node-phantom](https://github.com/alexscheelmeyer/node-phantom) is no longer maintained. This is a copy of that project with some fixes.
+The end result is published on npm as [node-slimer](https://www.npmjs.com/package/node-slimer).
+
 Node-phantom
 ---------------
 
@@ -86,6 +89,12 @@ This can for example be used together with the [PhantomJS package](https://npmjs
 
 ```javascript
 phantom.create(callback,{phantomPath:require('phantomjs').path})
+```
+
+You can also use slimerJS:
+
+```javascript
+phantom.create(callback,{phantomPath: './slimerjs-0.9.6/slimerjs'})
 ```
 
 ### Working with the API
