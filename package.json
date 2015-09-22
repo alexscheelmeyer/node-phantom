@@ -1,7 +1,7 @@
 {
   "author": "Alex Scheel Meyer (http://www.linkedin.com/in/alexscheelmeyer)",
-  "name": "node-phantom",
-  "description": "bridge between node.js and PhantomJS",
+  "name": "node-slimer",
+  "description": "bridge between node.js and PhantomJS | SlimerJS",
   "version": "0.2.5",
   "homepage": "https://github.com/alexscheelmeyer/node-phantom",
   "repository": {

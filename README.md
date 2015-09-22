@@ -1,3 +1,6 @@
+It seems like [node-phantom](https://github.com/alexscheelmeyer/node-phantom) is no longer maintained. This is a copy of that project with some fixes.
+The end result is published on npm as [node-slimer](https://www.npmjs.com/package/node-slimer).
+
 Node-phantom
 ---------------
 
