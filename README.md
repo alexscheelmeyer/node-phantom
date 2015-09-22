@@ -88,6 +88,12 @@ This can for example be used together with the [PhantomJS package](https://npmjs
 phantom.create(callback,{phantomPath:require('phantomjs').path})
 ```
 
+You can also use slimerJS:
+
+```javascript
+phantom.create(callback,{phantomPath: './slimerjs-0.9.6/slimerjs'})
+```
+
 ### Working with the API
 
 Once you have the phantom instance you can use it much as you would the real PhantomJS, node-phantom tries to mimic the api.
