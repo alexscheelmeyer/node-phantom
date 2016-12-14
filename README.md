@@ -16,7 +16,7 @@ You will need to install PhantomJS first. The bridge assumes that the "phantomjs
 
 The only other dependency for using it is [socket.io](http://socket.io/).
 
-For running the tests you will need [Mocha](http://visionmedia.github.io/mocha/). The tests require PhantomJS 1.6 or newer to pass.
+For running the tests you will need [Mocha](http://mochajs.org/). The tests require PhantomJS 1.6 or newer to pass.
 
 
 Installing
