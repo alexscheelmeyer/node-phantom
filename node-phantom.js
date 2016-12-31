@@ -48,7 +48,7 @@ module.exports={
 			response.writeHead(200,{"Content-Type": "text/html"});
 			response.end('<html><head><script src="/socket.io/socket.io.js" type="text/javascript"></script><script type="text/javascript">\n\
 				window.onload=function(){\n\
-					var socket = new io.connect("http://" + window.location.hostname);\n\
+					var socket = new io.connect("http://" + window.location.hostname+ ":" + ' + server.address().port + ');\n\
 					socket.on("cmd", function(msg){\n\
 						alert(msg);\n\
 					});\n\
