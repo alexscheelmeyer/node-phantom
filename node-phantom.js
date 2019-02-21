@@ -1,8 +1,8 @@
-//Released to the public domain.
-
 var http=require('http');
 var socketio=require('socket.io');
 var child=require('child_process');
+
+require('dotenv').config();
 
 function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
@@ -55,7 +55,7 @@ module.exports={
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function(){			
+		}).listen(process.env.PHANTOM_BRIDGE_PORT, function(){
 			var io=socketio.listen(server,{'log level':1});
 	
 			var port=server.address().port;
