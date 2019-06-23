@@ -1,8 +1,8 @@
-//Released to the public domain.
-
 var http=require('http');
 var socketio=require('socket.io');
 var child=require('child_process');
+
+require('dotenv').config();
 
 function callbackOrDummy(callback){
 	if(callback===undefined)callback=function(){};
@@ -48,14 +48,14 @@ module.exports={
 			response.writeHead(200,{"Content-Type": "text/html"});
 			response.end('<html><head><script src="/socket.io/socket.io.js" type="text/javascript"></script><script type="text/javascript">\n\
 				window.onload=function(){\n\
-					var socket = new io.connect("http://" + window.location.hostname);\n\
+					var socket = new io.connect("http://" + window.location.host);\n\
 					socket.on("cmd", function(msg){\n\
 						alert(msg);\n\
 					});\n\
 					window.socket = socket;\n\
 				};\n\
 			</script></head><body></body></html>');
-		}).listen(function(){			
+		}).listen(process.env.PHANTOM_BRIDGE_PORT, function(){
 			var io=socketio.listen(server,{'log level':1});
 	
 			var port=server.address().port;

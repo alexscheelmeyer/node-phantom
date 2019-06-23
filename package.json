@@ -13,11 +13,12 @@
     "test": "mocha"
   },
   "dependencies": {
+    "dotenv": "^6.2.0",
     "socket.io": ">=0.9.6"
   },
   "devDependencies": {
-     "mocha": "*",
-     "pngjs": "0.4.0"
+    "mocha": "*",
+    "pngjs": "0.4.0"
   },
   "optionalDependencies": {},
   "engines": {

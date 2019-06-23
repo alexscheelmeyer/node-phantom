@@ -1,6 +1,7 @@
 //Released to the public domain.
 
-var port=phantom.args[0];
+var system = require('system');
+var port = system.args[1];
 var webpage=require('webpage');
 var controlpage=webpage.create();
 
